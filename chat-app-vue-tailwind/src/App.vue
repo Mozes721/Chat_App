@@ -19,7 +19,6 @@
                                 <option>Mutual Funds and ETFs</option>
                               </select>
                             </label>
-
                             <div class="flex flex-col mt-8">
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded">
                                     Join Chat
