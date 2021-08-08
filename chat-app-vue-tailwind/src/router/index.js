@@ -1,8 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import EnterRoom from '../components/EnterRoom.vue'
+import ChatRoom from '../components/ChatRoom.vue'
 
 const routes = [
-  
+  {
+    path: '/',
+    name: 'EnterRoom',
+    component: EnterRoom
+  },
+  {
+    path: '/chatroom',
+    name: 'Chatroom',
+    component: ChatRoom
+  }
 ]
 
 const router = createRouter({
