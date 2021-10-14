@@ -1,13 +1,13 @@
 <template>
-  <h2>Chat Room</h2>
+  <h2>Mutual Funds Room</h2>
   <!-- <h2>{{ }}</h2> -->
-  <router-view />
+  <!-- <router-view /> -->
 </template>
 
 <script>
 import EnterRoom from './EnterRoom.vue'
 export default {
-  name:'ChatRoom',
+  name:'MutualFundsRoom',
   components:{
     EnterRoom    
   }
