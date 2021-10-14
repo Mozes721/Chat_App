@@ -6,7 +6,7 @@
 </template>
 <style>
 </style>
-
+  
 <script>
 import EnterRoom from '@/components/EnterRoom.vue'
 import CryptoRoom from '@/components/CryptoRoom.vue'
