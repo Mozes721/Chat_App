@@ -5,7 +5,7 @@
                 <div class="flex flex-col flex-1 justify-center mb-8">
                     <h1 class="text-4xl text-center font-bold">Join your interest group and chat!</h1>
                     <div class="w-full mt-4">
-                        <form class="form-horizontal w-3/4 mx-auto" method="GET" action="/chatroom/">
+                        <form class="form-horizontal w-3/4 mx-auto" method="GET" action="/real-estate">
                             <div class="flex flex-col mt-4">
                                 <span class="px-1 text-gray-600 " >Username</span>
                                 <input type="text" class="flex-grow h-10 px-2 border rounded border-grey-400" v-model="username" required>
@@ -20,7 +20,7 @@
                               </select>
                             </label>
                             <div class="flex flex-col mt-8">
-                                <button @click="changeRoom" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded">
+                                <button v-on:click.prevent="enterRoom()" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded">
                                     Join Chat
                                 </button>
                             </div>
@@ -30,42 +30,37 @@
         </div>
         Username: {{ username }}
         Group: {{ selected }}
+        group: {{ path }}
     </div>
     
 </div>
 </template>
 
 <script>
-import CryptoRoom from '@/components/CryptoRoom.vue'
-import StockRoom from '@/components/StockRoom.vue'
-import RealEstateRoom from '@/components/RealEstateRoom.vue'
-import MutualFundsRoom from '@/components/MutualFundsRoom.vue'
 
 export default {
   name: 'EnterRoom',
-  components: {
-    CryptoRoom,
-    StockRoom,
-    RealEstateRoom,
-    MutualFundsRoom
-  },
+  
  data: () => ({
    username: "",
-   selected: "selected"
+   selected: "Crypto",
+  
  }),
 
-  // methods: {
-  //   changeRoom () {
-  //     this.$router.to('/chatroom')
-  //   },
-  //     submit(){
-  //        //if you want to send any data into server before redirection then you can do it here
-  //       this.$router.push({ChatRoom});
-  //       alert("Hello")
-  //     }
-  //   },
+  methods: {
+    changeRoom () {
+      this.selected = event.target.value
+      // alert(`Name: ${username} and ${selected}`)
+    },
+    enterRoom () {
+      if (this.username === ''){
+        alert("You have to enter your name")
+      }
+      this.$emit('child-room', this.selected)
+      this.$emit('user-to-room', this.username)
+    }
+  }
 }
-
 </script>
 
 <style>

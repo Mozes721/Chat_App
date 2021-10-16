@@ -1,7 +1,8 @@
 
 <template>
   <div id="app">
-   <component :is="currentComponent" v-bind="currentProperties"></component>
+   <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)"></component>
+  
   </div>
 </template>
 <style>
@@ -16,26 +17,28 @@ import MutualFundsRoom from '@/components/MutualFundsRoom.vue'
 export default ({
   name:'App',
   components: {
-    EnterRoom,
-    CryptoRoom,
-    StockRoom,
-    RealEstateRoom,
-    MutualFundsRoom
+    'Main Room': EnterRoom,
+    'Crypto': CryptoRoom,
+    'Stocks': StockRoom,
+    'Real Estate': RealEstateRoom,
+    'Mutual Funds and ETFs': MutualFundsRoom
   },
-  data: function () {
+  data () {
   return {
-    currentComponent: EnterRoom,
+    currentComponent: 'Main Room',
+    user: ''
   }
 },
-computed: {
-  currentProperties: function() {
-    if (this.currentComponent === EnterRoom) {
-      <EnterRoom/>
+props: {
+  username: ''
+},
+methods: {
+    updateRoom(room) {
+      this.currentComponent = room
+    },
+    addUser(user) {
+      this.user = user
     }
-    if (this.currentComponent === CryptoRoom){
-      <CryptoRoom/>
     }
-  }
-}   
 })
 </script>
