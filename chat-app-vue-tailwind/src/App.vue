@@ -2,7 +2,6 @@
 <template>
   <div id="app">
    <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)"></component>
-  
   </div>
 </template>
 <style>
