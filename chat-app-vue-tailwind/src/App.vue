@@ -28,12 +28,27 @@ export default ({
     user: ''
   }
 },
-props: {
-  username: ''
-},
+// props: [
+//   'username'
+// ],
 methods: {
     updateRoom(room) {
       this.currentComponent = room
+      if (this.currentComponent === 'Main Room') {
+        this.$router.push('/')
+      }
+      if (this.currentComponent === 'Crypto') {
+        this.$router.push('/crypto-room')
+      }
+      if (this.currentComponent === 'Stocks') {
+        this.$router.push('/stock-room')
+      }
+      if (this.currentComponent === 'Real Estate') {
+        this.$router.push('/real-estate-room')
+      }
+      if (this.currentComponent === 'Mutual Funds and ETFs') {
+        this.$router.push('/mutual-funds-room')
+      }
     },
     addUser(user) {
       this.user = user

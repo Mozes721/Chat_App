@@ -1,5 +1,5 @@
 <template>
-  <h2>Stock Room</h2>
+  <h2>Stock Room test</h2>
   <!-- <h2>{{ }}</h2> -->
   <!-- <router-view /> -->
 </template>

@@ -28,9 +28,9 @@
                 </div>
             </div>
         </div>
-        Username: {{ username }}
+        <!-- Username: {{ username }}
         Group: {{ selected }}
-        group: {{ path }}
+        group: {{ path }} -->
     </div>
     
 </div>
