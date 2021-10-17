@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-   <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)"></component>
+    <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)" :user="username"></component>
   </div>
 </template>
 <style>
@@ -25,12 +25,9 @@ export default ({
   data () {
   return {
     currentComponent: 'Main Room',
-    user: ''
+    username: ''
   }
 },
-// props: [
-//   'username'
-// ],
 methods: {
     updateRoom(room) {
       this.currentComponent = room
@@ -51,7 +48,7 @@ methods: {
       }
     },
     addUser(user) {
-      this.user = user
+      this.username = user
     }
     }
 }) 

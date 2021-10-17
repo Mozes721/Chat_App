@@ -1,7 +1,8 @@
 <template>
+  <div id="room">
   <h2>Real Estate Room</h2>
-  <!-- <h2>{{ }}</h2> -->
-  <!-- <router-view /> -->
+  <h2>{{user}}</h2>
+  </div>
 </template>
 
 <script>
@@ -10,6 +11,9 @@ export default {
   name:'RealEstateRoom',
   components:{
     EnterRoom    
-  }
+  },
+   props: [
+    'user'
+  ]
 }
 </script>
