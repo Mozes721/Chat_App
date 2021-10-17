@@ -54,5 +54,5 @@ methods: {
       this.user = user
     }
     }
-})
+}) 
 </script>
