@@ -26,7 +26,7 @@ export default ({
   return {
     currentComponent: 'Main Room',
     username: ''
-  }
+  } 
 },
 methods: {
     updateRoom(room) {
