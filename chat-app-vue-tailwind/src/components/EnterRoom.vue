@@ -28,9 +28,6 @@
                 </div>
             </div>
         </div>
-        <!-- Username: {{ username }}
-        Group: {{ selected }}
-        group: {{ path }} -->
     </div>
     
 </div>

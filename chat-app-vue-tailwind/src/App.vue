@@ -1,7 +1,8 @@
 
 <template>
   <div id="app">
-    <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)" :user="username"></component>
+    <!-- <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)" :user="username"></component> -->
+    <StockRoom />
   </div>
 </template>
 <style>
@@ -18,7 +19,7 @@ export default ({
   components: {
     'Main Room': EnterRoom,
     'Crypto': CryptoRoom,
-    'Stocks': StockRoom,
+    StockRoom,
     'Real Estate': RealEstateRoom,
     'Mutual Funds and ETFs': MutualFundsRoom
   },
