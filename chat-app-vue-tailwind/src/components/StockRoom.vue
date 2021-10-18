@@ -10,7 +10,7 @@
     </div>
   </div>
 </template>
-
+ 
 <script>
 import EnterRoom from './EnterRoom.vue'
 export default {
