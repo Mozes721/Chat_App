@@ -82,7 +82,7 @@
                     <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
                        
 
-                        <input aria-placeholder="Escribe un mensaje aquí" placeholder="Escribe un mensaje aquí"
+                        <input aria-placeholder="Enter your message" placeholder="Enter your message"
                             class="py-2 mx-3 pl-5 block w-full rounded-full bg-gray-100 outline-none focus:text-gray-700" type="text" name="message" required/>
 
                         <button class="outline-none focus:outline-none" type="submit">
