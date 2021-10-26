@@ -3,7 +3,7 @@
   <div class="bg-blue-400 h-screen w-screen overflow-hidden">
     <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
     <div class="flex flex-cols-2 w-3/4 border rounded items-center justify-center mb-8" style="min-height: 80vh;">
-            <div class="w-1/4 h-full bg-white border-r border-gray-300">
+            <div class="w-1/4 h-full bg-gray-100  border-r border-gray-300">
                 <div class="my-3 mx-3 ">
                     <button class=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                       Exit Room

@@ -19,7 +19,7 @@ export default ({
   components: {
     'Main Room': EnterRoom,
     'Crypto': CryptoRoom,
-    StockRoom,
+     StockRoom,
     'Real Estate': RealEstateRoom,
     'Mutual Funds and ETFs': MutualFundsRoom
   },
