@@ -1,5 +1,5 @@
 {
-  "name": "chat-app-vue-tailwind",
+  "name": "ls",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,5 +24,9 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "vue-cli-plugin-tailwind": "~2.0.6"
-  }
+  },
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "author": "Richard",
+  "license": "ISC"
 }

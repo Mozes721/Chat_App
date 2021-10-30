@@ -108,6 +108,14 @@ export default {
    props: [
     'user'
   ],
+//   data() {
+//       return {
+//       user: '',
+//       message: '',
+//       messages: [],
+//       socket: io('localhost:3000')
+//       }
+//   },
   methods: {
     chooseRoom() {
       alert()
