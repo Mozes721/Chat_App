@@ -122,7 +122,7 @@ export default {
   methods: {
     sendMessage(e) {
             e.preventDefault();
-            
+             
             this.socket.emit('SEND_MESSAGE', {
                 // user: this.user,
                 message: this.message
