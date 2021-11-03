@@ -56,6 +56,14 @@
                     <div id="chat" class="w-full overflow-y-auto p-10 relative" style="height: 700px;" ref="toolbarChat">
                         <ul>
                             <li class="clearfix2">
+                                 <div class="w-full flex justify-start" v-for="(msg, index) in messages" :key="index">
+
+                                    <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
+                                        <span class="block">{{ msg.message }}</span>
+                                        <span class="block text-xs text-right">{{ timestamp }}</span>
+                                    </div>
+                                </div>
+<!-- 
                                 <div class="w-full flex justify-start">
                                     <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                                         <span class="block">Hello bro</span>
@@ -73,12 +81,12 @@
                                         <span class="block">how are you?</span>
                                         <span class="block text-xs text-left">10:32pm</span>
                                     </div>
-                                </div>
+                                </div> -->
             
                             </li>
                         </ul>
                     </div>
-                     <form @submit.prevent="sendMessage" action="">
+                     <form @submit.prevent="sendMessage">
                         <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
                         
                                 <input aria-placeholder="Enter your message" placeholder="Enter your message" type="text" v-model="message"
@@ -111,32 +119,41 @@ export default {
     'user'
   ],
   data() {
-      return {
-    //   user: '',
-      message: '',
-      messages: [],
-      socket: io('localhost:3000')
-      }
-  },
-  methods: {
-    sendMessage(e) {
+        return {
+            // user: '',
+            message: '',
+            messages: [],
+            timestamp: '',
+            socket : io('localhost:3000')
+        }
+    },
+    computed: {
+        submitedMessage() {
+            const today = new Date();
+            const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+       
+       return time
+       }
+    },
+
+
+    methods: {
+        sendMessage(e) {
             e.preventDefault();
-             
+            
             this.socket.emit('SEND_MESSAGE', {
                 // user: this.user,
-                message: this.message
+                message: this.message,
+                timestamp: this.submitedMessage
             });
             this.message = ''
-        },
-    //     mounted() {
-    //     this.socket.on('MESSAGE', (data) => {
-    //         this.messages = [...this.messages, data];
-    //         // you can also do this.messages.push(data)
-    //     });
-    // },
-    chooseRoom() {
-      alert()
+            // window.scrollTo(0, document.body.scrollHeight);
+        }
+    },
+    mounted() {
+        this.socket.on('MESSAGE', (data) => {
+            this.messages = [...this.messages, data];
+        });
     }
-  }
 }
 </script>
