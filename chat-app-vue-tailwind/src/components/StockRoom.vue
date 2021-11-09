@@ -123,7 +123,7 @@ export default {
             // user: '',
             message: '',
             messages: [],
-            timestamp: '',
+            // timestamp: '',
             socket : io('localhost:3000')
         }
     },
@@ -140,7 +140,7 @@ export default {
     methods: {
         sendMessage(e) {
             e.preventDefault();
-            
+            console.log(this.message)
             this.socket.emit('SEND_MESSAGE', {
                 // user: this.user,
                 message: this.message,
