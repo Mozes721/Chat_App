@@ -60,7 +60,7 @@
 
                                     <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                                         <span class="block">{{ msg.message }}</span>
-                                        <span class="block text-xs text-right">{{ timestamp }}</span>
+                                        <span class="block text-xs text-right">{{this.timestamp}}</span>
                                     </div>
                                 </div>
 <!-- 
@@ -109,6 +109,8 @@
 <script>
 import EnterRoom from './EnterRoom.vue'
 import io from 'socket.io-client';
+import moment from 'moment'
+
 
 export default {
   name:'StockRoom',
@@ -123,31 +125,21 @@ export default {
             // user: '',
             message: '',
             messages: [],
-            // timestamp: '',
+            timestamp: '',
             socket : io('localhost:3000')
         }
     },
-    computed: {
-        submitedMessage() {
-            const today = new Date();
-            const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-       
-       return time
-       }
-    },
-
-
+   
     methods: {
         sendMessage(e) {
             e.preventDefault();
-            console.log(this.message)
+            this.timestamp = moment().format('h:mm a')
             this.socket.emit('SEND_MESSAGE', {
                 // user: this.user,
                 message: this.message,
-                timestamp: this.submitedMessage
             });
             this.message = ''
-            // window.scrollTo(0, document.body.scrollHeight);
+            window.scrollTo(0, document.body.scrollHeight);
         }
     },
     mounted() {
