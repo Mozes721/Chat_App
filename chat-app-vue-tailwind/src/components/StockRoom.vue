@@ -17,7 +17,7 @@
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
                                     <span class="block ml-2 font-semibold text-base text-gray-600 ">Jhon C</span>
-                                  
+                                   
                                 </div>
                               
                             </div>
