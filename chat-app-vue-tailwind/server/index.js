@@ -2,6 +2,8 @@ const express  = require('express')
 const socket = require('socket.io')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const moment = require('moment')
+
 
 const app = new express()
 
@@ -23,6 +25,9 @@ let io = socket(server, {
 io.on('connection', function(socket) {
     console.log(socket.id)
     socket.on('SEND_MESSAGE', function(data) {
-        io.emit('MESSAGE', data)
+        io.emit('MESSAGE', {
+            ...data,
+            timestamp: moment().format('h:mm a'),
+        })
     });
 }); 

@@ -60,7 +60,7 @@
 
                                     <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
                                         <span class="block">{{ msg.message }}</span>
-                                        <span class="block text-xs text-right">{{this.timestamp}}</span>
+                                        <span class="block text-xs text-right">{{msg.timestamp}}</span>
                                     </div>
                                 </div>
 <!-- 
@@ -109,7 +109,6 @@
 <script>
 import EnterRoom from './EnterRoom.vue'
 import io from 'socket.io-client';
-import moment from 'moment'
 
 
 export default {
@@ -125,7 +124,7 @@ export default {
             // user: '',
             message: '',
             messages: [],
-            timestamp: '',
+
             socket : io('localhost:3000')
         }
     },
@@ -133,10 +132,10 @@ export default {
     methods: {
         sendMessage(e) {
             e.preventDefault();
-            this.timestamp = moment().format('h:mm a')
             this.socket.emit('SEND_MESSAGE', {
                 // user: this.user,
                 message: this.message,
+ 
             });
             this.message = ''
             window.scrollTo(0, document.body.scrollHeight);
@@ -145,6 +144,7 @@ export default {
     mounted() {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
+          
         });
     }
 }
