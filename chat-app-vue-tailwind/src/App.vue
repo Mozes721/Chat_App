@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <!-- <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)" :user="username"></component> -->
+    <!-- <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)" :users="username"></component> -->
     <StockRoom />
   </div>
 </template>

@@ -4,7 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
 
- 
+let users = [];
+
 const app = new express()
 
 
@@ -22,12 +23,28 @@ let io = socket(server, {
     }
 });
 
-io.on('connection', function(socket) {
-    console.log(socket.id)
-    socket.on('SEND_MESSAGE', function(data) {
-        io.emit('MESSAGE', {
-            ...data,
-            timestamp: moment().format('h:mm a'),
-        })
+io.on('connection', socket => {
+    socket.on('join server', (username) => {
+        const user = {
+            username,
+            id: socket.id,
+        };
+        users.push(user);
+        io.emit('new user', users);
     });
-}); 
+    socket.io("join room", (roomName, cb) => {
+        socket.join(roomName);
+        cb(messages[roomName]);
+    });
+
+})
+
+// io.on('connection', function(socket) {
+//     console.log(socket.id)
+//     socket.on('SEND_MESSAGE', function(data) {
+//         io.emit('MESSAGE', {
+//             ...data,
+//             timestamp: moment().format('h:mm a'),
+//         })
+//     });
+// }); 

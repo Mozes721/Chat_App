@@ -117,7 +117,7 @@ export default {
     EnterRoom    
   },
    props: [
-    'user'
+    'users'
   ],
   data() {
         return {
