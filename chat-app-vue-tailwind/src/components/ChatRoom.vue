@@ -6,7 +6,7 @@
             <div class="w-1/4 h-full bg-gray-100  border-r border-gray-300">
                 <div class="my-3 mx-3 ">
                     <button class=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                      Exit Room
+                      Exit Room 
                     </button>  
                 </div>
                 <ul class="overflow-auto" style="height: 500px;">
