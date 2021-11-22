@@ -17,7 +17,7 @@
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
                                     <span class="block ml-2 font-semibold text-base text-gray-600 ">Jhon C</span>
-                                   
+                                  
                                 </div>
                               
                             </div>
@@ -49,7 +49,7 @@
                 <div class="w-full">
                     <div class="flex items-center border-b border-gray-300 pl-3 py-3">
                       
-                        <span class="block ml-2 font-bold  text-gray-700 text-2xl align-middle">Stock Room</span><br>
+                        <span class="block ml-2 font-bold  text-gray-700 text-2xl align-middle">Chat Room</span><br>
                         <h5 class="block ml-2 font-bold text-base text-gray-600 float-left">Eduard</h5>
                       
                     </div>
@@ -109,22 +109,22 @@
 <script>
 import EnterRoom from './EnterRoom.vue'
 import io from 'socket.io-client';
+import moment from 'moment'
 
 
 export default {
-  name:'StockRoom',
+  name:'ChatRoom',
   components:{
     EnterRoom    
   },
    props: [
-    'users'
+    'user'
   ],
   data() {
         return {
             // user: '',
             message: '',
             messages: [],
-
             socket : io('localhost:3000')
         }
     },
@@ -135,7 +135,6 @@ export default {
             this.socket.emit('SEND_MESSAGE', {
                 // user: this.user,
                 message: this.message,
- 
             });
             this.message = ''
             window.scrollTo(0, document.body.scrollHeight);
@@ -144,7 +143,6 @@ export default {
     mounted() {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
-          
         });
     }
 }

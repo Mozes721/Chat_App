@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EnterRoom from '../components/EnterRoom.vue'
-import CryptoRoom from '../components/CryptoRoom.vue'
-import StockRoom from '../components/StockRoom.vue'
-import RealEstateRoom from '../components/RealEstateRoom.vue'
-import MutualFundsRoom from '../components/MutualFundsRoom.vue'
+import ChatRoom from '../components/ChatRoom.vue'
 
 const routes = [
   {
@@ -12,26 +9,10 @@ const routes = [
     component: EnterRoom
   },
   {
-    path: '/crypto-room',
-    name: 'CryptoRoom',
-    component: CryptoRoom
-  },
-  {
-    path: '/stock-room',
-    name: 'StockRoom',
-    component: StockRoom
-  },
-  {
-    path: '/real-estate-room',
-    name: 'RealEstateRoom',
-    component: RealEstateRoom
-  },
-  {
-    path: '/mutual-funds-room',
-    name: 'MutualFundsRoom',
-    component: MutualFundsRoom
-  }
-  
+    path: '/chat-room',
+    name: 'ChatRoom',
+    component: ChatRoom
+  }, 
 ] 
 
 const router = createRouter({

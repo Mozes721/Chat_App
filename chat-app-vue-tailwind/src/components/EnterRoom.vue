@@ -5,7 +5,7 @@
                 <div class="flex flex-col flex-1 justify-center mb-8">
                     <h1 class="text-4xl text-center font-bold">Join your interest group and chat!</h1>
                     <div class="w-full mt-4">
-                        <form class="form-horizontal w-3/4 mx-auto" method="GET" action="/real-estate">
+                        <form class="form-horizontal w-3/4 mx-auto" method="GET">
                             <div class="flex flex-col mt-4" required>
                                 <span class="px-1 text-gray-600 " >Username</span>
                                 <input type="text" class="flex-grow h-10 px-2 border rounded border-grey-400" v-model="username" required>
@@ -13,10 +13,10 @@
                             <label class="flex flex-col mt-4">
                               <span class= "px-1 text-gray-600 p-2">Choose your room</span>
                               <select  v-on:change="changeRoom($event)" class="form-select h-10 block w-full rounded">
-                                <option value="Crypto">Crypto</option>
-                                <option value="Stocks">Stocks</option>
+                                <option value="Chat Room">Chat Room</option>
+                                <!-- <option value="Stocks">Stocks</option>
                                 <option value="Real Estate">Real Estate</option>
-                                <option value="Mutual Funds and ETFs">Mutual Funds and ETFs</option>
+                                <option value="Mutual Funds and ETFs">Mutual Funds and ETFs</option> -->
                               </select>
                             </label>
                             <div class="flex flex-col mt-8">
@@ -40,7 +40,7 @@ export default {
   
  data: () => ({
    username: "",
-   selected: "Crypto",
+   selected: "Chat Room",
   
  }),
 
