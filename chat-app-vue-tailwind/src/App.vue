@@ -1,7 +1,7 @@
 
 <template>
   <div id="app">
-    <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)"  :user="username"></component>
+    <component v-bind:is="currentComponent" v-on:child-room="updateRoom($event)" v-on:user-to-room="addUser($event)"  :user="username"></component>
   </div>
 </template>
 <style>
@@ -10,6 +10,7 @@
 <script>
 import EnterRoom from '@/components/EnterRoom.vue'
 import ChatRoom from '@/components/ChatRoom.vue'
+import io from 'socket.io-client';
 
 export default ({
   name:'App',
@@ -20,17 +21,19 @@ export default ({
   data () {
   return {
     currentComponent: 'Main Room',
-    username: ''
+    username: '',
   } 
 },
 methods: {
     updateRoom(room) {
       this.currentComponent = room
       if (this.currentComponent === 'Main Room') {
+         console.log(this.username)
         this.$router.push('/')
       }
       if (this.currentComponent === 'Chat Room') {
-        this.$router.push('/chat-room')
+           console.log(this.username)
+           this.$router.push('/chat-room')
       }
     },
     addUser(user) {

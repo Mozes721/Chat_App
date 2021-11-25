@@ -50,7 +50,7 @@
                     <div class="flex items-center border-b border-gray-300 pl-3 py-3">
                       
                         <span class="block ml-2 font-bold  text-gray-700 text-2xl align-middle">Chat Room</span><br>
-                        <h5 class="block ml-2 font-bold text-base text-gray-600 float-left">Eduard</h5>
+                        <h5 class="block ml-2 font-bold text-base text-gray-600 float-left">{{this.user}}</h5>
                       
                     </div>
                     <div id="chat" class="w-full overflow-y-auto p-10 relative" style="height: 700px;" ref="toolbarChat">
@@ -109,7 +109,8 @@
 <script>
 import EnterRoom from './EnterRoom.vue'
 import io from 'socket.io-client';
-import moment from 'moment'
+
+
 
 
 export default {
@@ -122,22 +123,25 @@ export default {
   ],
   data() {
         return {
-            // user: '',
             message: '',
             messages: [],
-            socket : io('localhost:3000')
+            socket: io('localhost:3000')
         }
+    },
+    created: function () {
+          this.socket.emit('join', this.user);  
     },
    
     methods: {
         sendMessage(e) {
             e.preventDefault();
             this.socket.emit('SEND_MESSAGE', {
-                // user: this.user,
+                user: this.user,
                 message: this.message,
             });
             this.message = ''
             window.scrollTo(0, document.body.scrollHeight);
+            console.log(users)
         }
     },
     mounted() {

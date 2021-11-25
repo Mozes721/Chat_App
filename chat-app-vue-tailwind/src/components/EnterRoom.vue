@@ -35,11 +35,12 @@
 
 <script>
 
+
 export default {
   name: 'EnterRoom',
   
  data: () => ({
-   username: "",
+   username: '',
    selected: "Chat Room",
   
  }),

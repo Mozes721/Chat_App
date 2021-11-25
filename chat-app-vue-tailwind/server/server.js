@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
 
+var users = [];
 
 const app = new express()
 
@@ -22,12 +23,28 @@ let io = socket(server, {
     }
 });
 
+
 io.on('connection', function(socket) {
-    console.log(socket.id)
+    socket.username = 'anonymous';
+    socket.on('join', (username) => {
+       if (username != null) {
+      socket.username = username
+      console.log(socket.username, socket.id)
+    } if(username != users) {
+        users.push(username);
+    }
+    }),
+    
     socket.on('SEND_MESSAGE', function(data) {
         io.emit('MESSAGE', {
             ...data,
             timestamp: moment().format('h:mm a'),
         })
     });
-}); 
+    socket.on('disconnect', () => {
+        
+    console.log('user disconnected');
+  });
+})
+
+
