@@ -12,17 +12,17 @@
                 <ul class="overflow-auto" style="height: 500px;">
                     <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                     <li>
-                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="(user, index) in users_arr" :key="index">
                              
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">Jhon C</span>
+                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user.id}}</span>
                                   
                                 </div>
                               
                             </div>
                         </a>
-                        <a class="bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                        <!-- <a class="bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
                           
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
@@ -41,7 +41,7 @@
                                 </div>
                                
                             </div>
-                        </a>
+                        </a> -->
                     </li>
                 </ul>
             </div>
@@ -125,11 +125,17 @@ export default {
         return {
             message: '',
             messages: [],
+            users: [],
             socket: io('localhost:3000')
         }
     },
     created: function () {
           this.socket.emit('join', this.user);  
+          for (var i = 0; i < this.users.length; i++) {
+                console.log(this.users[i]['name']);
+            }
+
+            console.log("HI")
     },
    
     methods: {
@@ -141,13 +147,15 @@ export default {
             });
             this.message = ''
             window.scrollTo(0, document.body.scrollHeight);
-            console.log(users)
         }
     },
     mounted() {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
         });
+        this.socket.on('userList', (all_users) => {
+            this.users = [...this.users, all_users];
+        })
     }
 }
 </script>
