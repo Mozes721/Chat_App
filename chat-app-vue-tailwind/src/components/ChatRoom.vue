@@ -16,7 +16,7 @@
                              
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user.id}}</span>
+                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{this.user}}</span>
                                   
                                 </div>
                               
@@ -56,12 +56,14 @@
                     <div id="chat" class="w-full overflow-y-auto p-10 relative" style="height: 700px;" ref="toolbarChat">
                         <ul>
                             <li class="clearfix2">
-                                 <div class="w-full flex justify-start" v-for="(msg, index) in messages" :key="index">
-
-                                    <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
-                                        <span class="block">{{ msg.message }}</span>
-                                        <span class="block text-xs text-right">{{msg.timestamp}}</span>
-                                    </div>
+                                 <div v-for="(msg, index) in messages" :key="index">
+                                     <div class="w-full flex " :class="isCurrentUser" v-on:change="currentUser(msg.user)">
+                                        <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"  style="max-width: 300px;">
+                                            <span class="block text-blue-400">{{ msg.user }}</span>
+                                            <span class="block">{{ msg.message }}</span>
+                                            <span class="block text-xs text-right">{{msg.timestamp}}</span>
+                                        </div>
+                                     </div>
                                 </div>
 <!-- 
                                 <div class="w-full flex justify-start">
@@ -126,11 +128,13 @@ export default {
             message: '',
             messages: [],
             users: [],
+            isCurrentUser: 'justify-end', 
             socket: io('localhost:3000')
         }
     },
     created: function () {
           this.socket.emit('join', this.user);  
+          console.log(this.users)
           for (var i = 0; i < this.users.length; i++) {
                 console.log(this.users[i]['name']);
             }
@@ -156,6 +160,16 @@ export default {
         this.socket.on('userList', (all_users) => {
             this.users = [...this.users, all_users];
         })
+    },
+    computed: {
+        currentUser(user) {
+            if (user == this.username) {
+                isCurrentUser = 'justify-end';
+            }
+            else {
+                isCurrentUser = 'justify-start';
+            }
+        }
     }
 }
 </script>

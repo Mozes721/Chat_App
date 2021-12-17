@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
 
-  
+
 var socketArr = [];
 const app = new express()
 
