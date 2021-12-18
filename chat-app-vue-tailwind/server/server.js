@@ -5,7 +5,7 @@ const cors = require('cors')
 const moment = require('moment')
 
 
-var socketArr = [];
+var clients = {};
 const app = new express()
 
 
@@ -27,15 +27,9 @@ let io = socket(server, {
 io.on('connection', function(socket) {
     
     socket.on('join', (username) => {
-    socketArr.push({
-			id: socket.id,
-			name: username,
-		})
-        // var userList = {
-		// 	socketArr: socketArr
-		// };
-        io.emit("userList", JSON.stringify(socketArr))
-        console.log(socketArr)
+    clients[socket.id] = username;
+        io.emit("userList", JSON.stringify(clients))
+        console.log(clients)
     });
 
     socket.on('SEND_MESSAGE', function(data) {
@@ -46,7 +40,9 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', () => {
-    console.log(io.sockets.sockets)    
+    delete clients[socket.id]
     console.log('user disconnected');
+    console.log(clients);
+    
   });
 })

@@ -5,7 +5,7 @@
     <div class="flex flex-cols-2 w-3/4 border rounded items-center justify-center mb-8" style="min-height: 80vh;">
             <div class="w-1/4 h-full bg-gray-100  border-r border-gray-300">
                 <div class="my-3 mx-3 ">
-                    <button class=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    <button class= " bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                       Exit Room 
                     </button>  
                 </div>
@@ -57,7 +57,7 @@
                         <ul>
                             <li class="clearfix2">
                                  <div v-for="(msg, index) in messages" :key="index">
-                                     <div class="w-full flex " :class="isCurrentUser" v-on:change="currentUser(msg.user)">
+                                     <div class="w-full flex " v-bind:class="{'justify-end': User(msg.user)}">
                                         <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative"  style="max-width: 300px;">
                                             <span class="block text-blue-400">{{ msg.user }}</span>
                                             <span class="block">{{ msg.message }}</span>
@@ -128,7 +128,6 @@ export default {
             message: '',
             messages: [],
             users: [],
-            isCurrentUser: 'justify-end', 
             socket: io('localhost:3000')
         }
     },
@@ -151,6 +150,11 @@ export default {
             });
             this.message = ''
             window.scrollTo(0, document.body.scrollHeight);
+        },
+        User(User) {
+            if (this.user === User) {
+                return true
+            }
         }
     },
     mounted() {
@@ -161,15 +165,5 @@ export default {
             this.users = [...this.users, all_users];
         })
     },
-    computed: {
-        currentUser(user) {
-            if (user == this.username) {
-                isCurrentUser = 'justify-end';
-            }
-            else {
-                isCurrentUser = 'justify-start';
-            }
-        }
-    }
 }
 </script>
