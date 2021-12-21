@@ -5,43 +5,22 @@
     <div class="flex flex-cols-2 w-3/4 border rounded items-center justify-center mb-8" style="min-height: 80vh;">
             <div class="w-1/4 h-full bg-gray-100  border-r border-gray-300">
                 <div class="my-3 mx-3 ">
-                    <button class= " bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    <button  class= " bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" v-bind:is="ExitRoom">
                       Exit Room 
                     </button>  
                 </div>
                 <ul class="overflow-auto" style="height: 500px;">
                     <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                     <li>
-                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="(user, index) in users_arr" :key="index">
+                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="user in users" :key="user">
                              
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{this.user}}</span>
-                                  
+                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user.name}}</span>
                                 </div>
                                
                             </div>
                         </a>
-                        <!-- <a class="bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
-                          
-                            <div class="w-full pb-2">
-                                <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">Eduard</span>
-                                  
-                                </div>
-                             
-                            </div>
-                        </a>
-                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
-                            
-                            <div class="w-full pb-2">
-                                <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">Celia</span>
-                               
-                                </div>
-                               
-                            </div>
-                        </a> -->
                     </li>
                 </ul>
             </div>
@@ -65,26 +44,6 @@
                                         </div>
                                      </div>
                                 </div>
-<!-- 
-                                <div class="w-full flex justify-start">
-                                    <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
-                                        <span class="block">Hello bro</span>
-                                        <span class="block text-xs text-right">10:30pm</span>
-                                    </div>
-                                </div>
-                                <div class="w-full flex justify-end" >
-                                    <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
-                                        <span class="block">Hello</span>
-                                        <span class="block text-xs text-left">10:32pm</span>
-                                    </div>
-                                </div>
-                                <div class="w-full flex justify-end" >
-                                    <div class="bg-gray-100 rounded px-5 py-2 my-2 text-gray-700 relative" style="max-width: 300px;">
-                                        <span class="block">how are you?</span>
-                                        <span class="block text-xs text-left">10:32pm</span>
-                                    </div>
-                                </div> -->
-            
                             </li>
                         </ul>
                     </div>
@@ -133,15 +92,19 @@ export default {
     },
     created: function () {
           this.socket.emit('join', this.user);  
+        //   this.users=Object.values(this.users)
           console.log(this.users)
           for (var i = 0; i < this.users.length; i++) {
-                console.log(this.users[i]['name']);
+                console.log(this.users[i]);
             }
-
-            console.log("HI")
+        
+            console.log("HI") 
     },
    
     methods: {
+        ExitRoom() {
+            this.components = EnterRoom;
+        },
         sendMessage(e) {
             e.preventDefault();
             this.socket.emit('SEND_MESSAGE', {

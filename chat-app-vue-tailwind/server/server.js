@@ -3,9 +3,9 @@ const socket = require('socket.io')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
+const { addUser, removeUser, getUser} = require("./users");
+const users = require('./users')
 
-
-var clients = {};
 const app = new express()
 
 
@@ -27,9 +27,20 @@ let io = socket(server, {
 io.on('connection', function(socket) {
     
     socket.on('join', (username) => {
-    clients[socket.id] = username;
-        io.emit("userList", JSON.stringify(clients))
-        console.log(clients)
+
+        const { error, user } = addUser(
+            { id: socket.id, name: username });
+ 
+        if (error) return callback(error);
+
+        io.emit("userList", user)
+    // clients[socket.id] = username;
+    //     io.emit("userList", {
+    //         ...clients
+    //     })
+    //     console.log(clients)
+        console.log("Added users")
+        console.log(user)
     });
 
     socket.on('SEND_MESSAGE', function(data) {
@@ -40,9 +51,10 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', () => {
-    delete clients[socket.id]
+    console.log(removeUser(socket.id));
+
     console.log('user disconnected');
-    console.log(clients);
+    // console.log(user);
     
   });
 })
