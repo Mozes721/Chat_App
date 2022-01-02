@@ -34,8 +34,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: 'EnterRoom',
   
@@ -44,10 +42,9 @@ export default {
    selected: "Chat Room",
   
  }),
-
   methods: {
     changeRoom () {
-      this.selected = event.target.value
+      this.selected = target.value
       // alert(`Name: ${username} and ${selected}`)
     },
     enterRoom () {
@@ -64,5 +61,4 @@ export default {
 </script>
 
 <style>
-
 </style>

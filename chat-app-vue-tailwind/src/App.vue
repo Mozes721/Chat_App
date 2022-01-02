@@ -10,8 +10,6 @@
 <script>
 import EnterRoom from '@/components/EnterRoom.vue'
 import ChatRoom from '@/components/ChatRoom.vue'
-import io from 'socket.io-client';
-
 export default ({
   name:'App',
   components: {
@@ -28,12 +26,11 @@ methods: {
     updateRoom(room) {
       this.currentComponent = room
       if (this.currentComponent === 'Main Room') {
-         console.log(this.username)
         this.$router.push('/')
       }
       if (this.currentComponent === 'Chat Room') {
-           console.log(this.username)
-           this.$router.push('/chat-room')
+           this.$router.push("/chat-room/" + this.user)
+     
       }
     },
     addUser(user) {

@@ -9,7 +9,7 @@ const routes = [
     component: EnterRoom
   },
   {
-    path: '/chat-room',
+    path: '/chat-room/:username',
     name: 'ChatRoom',
     component: ChatRoom
   }, 
