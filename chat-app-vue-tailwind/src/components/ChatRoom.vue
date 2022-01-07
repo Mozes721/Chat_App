@@ -45,6 +45,8 @@
                                 </div>
                             </li>
                         </ul>
+                        <p v-if="joined !== ''">New user joined {{this.joined}}</p>
+                        <p v-if="typing">Someone is typing...</p>
                     </div>
                      <form @submit.prevent="sendMessage">
                         <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
@@ -79,6 +81,8 @@ export default {
   ],
   data() {
         return {
+            joined: '',
+            typing: false,
             message: '',
             messages: [],
             users: [],
@@ -88,16 +92,12 @@ export default {
     created: function () {
           this.socket.emit('join', this.user);  
         //   this.users=Object.values(this.users)
-          console.log(this.users)
-          for (var i = 0; i < this.users.length; i++) {
-                console.log(this.users[i]);
-            }
-        
-            console.log("HI") 
+          
     },
    
     methods: {
         enterRoom(){
+        this.socket.disconnect()
         this.$emit('child-room', 'Main Room')
             },
         sendMessage(e) {
@@ -113,8 +113,19 @@ export default {
             if (this.user === User) {
                 return true
             }
+        },
+	userTyping() {
+            console.log(`User by the name of ${this.user} is typing...`)
+            this.socket.on('display', (data)=>{
+                if(data.typing==true)
+                console.log(`${this.user} is typing...`)
+            //     $('.typing').text(`${data.user} is typing...`)
+                else
+                    console.log('Not typing')
+            })
         }
     },
+
     mounted() {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
@@ -123,5 +134,10 @@ export default {
             this.users = [...this.users, all_users];
         })
     },
+    watch: {
+        message() {
+            this.userTyping();
+        }
+    }
 }
 </script>

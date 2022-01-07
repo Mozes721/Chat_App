@@ -28,10 +28,6 @@ methods: {
       if (this.currentComponent === 'Main Room') {
         this.$router.push('/')
       }
-      if (this.currentComponent === 'Chat Room') {
-           this.$router.push("/chat-room/" + this.user)
-     
-      }
     },
     addUser(user) {
       this.username = user
