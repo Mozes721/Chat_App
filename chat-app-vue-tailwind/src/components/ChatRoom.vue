@@ -45,9 +45,9 @@
                                 </div>
                             </li>
                         </ul>
-                        <p v-if="joined !== ''">New user joined {{this.joined}}</p>
-                        <p v-if="typing">Someone is typing...</p>
                     </div>
+                    <p v-if="joined" class="pl-4 italic text-green-600">{{this.user_joined}}</p>
+                    <p v-if="typing" class="pl-4 italic text-gray-600">{{this.user_typing}}</p>
                      <form @submit.prevent="sendMessage">
                         <div class="w-full py-3 px-3 flex items-center justify-between border-t border-gray-300">
                         
@@ -81,8 +81,10 @@ export default {
   ],
   data() {
         return {
-            joined: '',
+            joined: false,
             typing: false,
+            user_joined: '',
+            user_typing: '',
             message: '',
             messages: [],
             users: [],
@@ -90,15 +92,15 @@ export default {
         }
     },
     created: function () {
+          this.$router.push("/chat-room/" + this.user)
           this.socket.emit('join', this.user);  
-        //   this.users=Object.values(this.users)
-          
     },
    
     methods: {
         enterRoom(){
         this.socket.disconnect()
         this.$emit('child-room', 'Main Room')
+
             },
         sendMessage(e) {
             e.preventDefault();
@@ -107,6 +109,7 @@ export default {
                 message: this.message,
             });
             this.message = ''
+            this.typing = false
             window.scrollTo(0, document.body.scrollHeight);
         },
         User(User) {
@@ -115,14 +118,9 @@ export default {
             }
         },
 	userTyping() {
-            console.log(`User by the name of ${this.user} is typing...`)
-            this.socket.on('display', (data)=>{
-                if(data.typing==true)
-                console.log(`${this.user} is typing...`)
-            //     $('.typing').text(`${data.user} is typing...`)
-                else
-                    console.log('Not typing')
-            })
+        this.socket.emit('typing', {
+            user: this.user
+        })
         }
     },
 
@@ -132,12 +130,27 @@ export default {
         });
         this.socket.on('userList', (all_users) => {
             this.users = [...this.users, all_users];
+        });
+        this.socket.on('user_joined', (data) => {
+            this.joined = true
+            this.user_joined = `User ${data.username} has joined.`
+            setTimeout(() =>{
+                this.joined = false
+            }, 7000);
+        }),
+        this.socket.on('userTyping', (data) => {
+            this.typing = true
+            this.user_typing = `${data.user} is typing...`
+            setTimeout(() =>{
+                this.typing = false
+            }, 5000);
         })
     },
     watch: {
         message() {
-            this.userTyping();
-        }
+            this.userTyping()
+        } 
+        
     }
 }
 </script>

@@ -25,22 +25,15 @@ let io = socket(server, {
 
 
 io.on('connection', function(socket) {
-    
     socket.on('join', (username) => {
-
         const { error, user } = addUser(
             { id: socket.id, name: username });
- 
         if (error) return callback(error);
-
         io.emit("userList", user)
-    // clients[socket.id] = username;
-    //     io.emit("userList", {
-    //         ...clients
-    //     })
-    //     console.log(clients)
-        console.log("Added users")
-        console.log(user)
+        
+        socket.broadcast.emit('user_joined', {
+            username
+        })
     });
 
     socket.on('SEND_MESSAGE', function(data) {
@@ -49,12 +42,15 @@ io.on('connection', function(socket) {
             timestamp: moment().format('h:mm a'),
         })
     });
-
+    socket.on('typing', function(data) {
+        socket.broadcast.emit('userTyping', {
+            ...data
+        });
+    })
+   
     socket.on('disconnect', () => {
     console.log(removeUser(socket.id));
-
     console.log('user disconnected');
-    // console.log(user);
     
   });
 })
