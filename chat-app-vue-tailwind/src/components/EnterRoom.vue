@@ -51,6 +51,7 @@ export default {
       if (this.username === ''){
         alert("You have to enter your name") 
       }
+      
       else if (this.username.length < 6) {
         alert("Your username is too short it has to be of lenght 6 or more")
       }
