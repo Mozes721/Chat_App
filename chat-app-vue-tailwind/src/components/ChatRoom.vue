@@ -7,7 +7,7 @@
                     <button  class= " bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" v-on:click.prevent="enterRoom()">
                       Exit Room 
                     </button>  
-                </div>
+                </div> 
                 <ul class="overflow-auto" style="height: 500px;">
                     <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                     <li>
