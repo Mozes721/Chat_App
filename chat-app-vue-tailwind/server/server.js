@@ -3,9 +3,7 @@ const socket = require('socket.io')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
-const { addUser, removeUser, getUser, users} = require("./users");
-var removed_user = require("./users");
-
+const { addUser, removeUser, getUser} = require("./users");
 const app = new express()
 
 
