@@ -22,7 +22,7 @@ let io = socket(server, {
         origins: ["*"],
     }
 });
-
+ 
 
 io.on('connection', function(socket) {
     socket.on('join', (username) => {
