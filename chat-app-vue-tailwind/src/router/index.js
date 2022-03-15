@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EnterRoom from '../components/EnterRoom.vue'
 import ChatRoom from '../components/ChatRoom.vue'
-
+ 
 const routes = [
   {
     path: '/',
