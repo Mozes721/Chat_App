@@ -11,11 +11,11 @@
                 <ul class="overflow-auto" style="height: 500px;">
                     <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                     <li>
-                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="user in users" :key="user">
+                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="(user, idx) in users" :key="idx">
                              
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user.name}}</span>
+                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user}}</span>
                                 </div>
                                
                             </div>
@@ -72,6 +72,7 @@
 <script>
 import EnterRoom from './EnterRoom.vue';
 import io from 'socket.io-client';
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name:'ChatRoom',
   components:{
@@ -90,17 +91,27 @@ export default {
             user_typing: '',
             message: '',
             messages: [],
-            users: [],
             socket: io('localhost:3000')
         }
     },
     created: function () {
           this.$router.push("/chat-room/" + this.user)
-          this.socket.emit('join', this.user);  
-        //   this.all_users.allUsers;
-          console.log(this.all_users)
+          this.socket.emit('join', this.user); 
+        //   this.addedUser(this.user)
+        this.$store.dispatch('addUser', this.user)
     },
-   
+    // mounted () {
+    //     this.$store.dispatch('addUser', this.user)
+    // },
+    computed: {
+        ...mapGetters({
+            users: 'getUsers'
+        }),
+        ...mapActions({
+            addedUser: 'addUser',
+            removedUser: 'removeUser'
+        })
+    },
     methods: {
         enterRoom(){
         this.socket.disconnect()
@@ -131,6 +142,7 @@ export default {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
         });
+        // change to vuex
         this.socket.on('userList', (all_users) => {
             this.users = [...this.users, all_users];
         });
@@ -149,6 +161,7 @@ export default {
                 this.typing = false
             }, 5000);
         }),
+        this.s
         this.socket.on('userLeft', (data) => {
             this.left = true 
             this.user_left = `${data.name} has left the chat`
@@ -161,6 +174,7 @@ export default {
         message() {
             this.userTyping()
         },
+        
     }
 }
 </script>

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
 const { addUser, removeUser, getUser, users} = require("./users");
-var removed_user = require("./users");
+
 
 const app = new express()
 
@@ -29,9 +29,9 @@ io.on('connection', function(socket) {
         const { error, user } = addUser(
             { id: socket.id, name: username });
         if (error) return callback(error);
-        // if (user != users.leng)
+        // Change to vuex
         io.emit("userList", user)
-        
+    
         console.log(users)
         socket.broadcast.emit('user_joined', {
             username
@@ -51,9 +51,7 @@ io.on('connection', function(socket) {
     })
    
     socket.on('disconnect', () => {
-    // getUser(socket.id);     
     socket.broadcast.emit("userLeft", getUser(socket.id))
     removeUser(socket.id);
-    
   });
 })
