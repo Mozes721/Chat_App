@@ -72,7 +72,8 @@
 <script>
 import EnterRoom from './EnterRoom.vue';
 import io from 'socket.io-client';
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+// import axios from "axios";
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name:'ChatRoom',
   components:{
@@ -97,24 +98,19 @@ export default {
     created: function () {
           this.$router.push("/chat-room/" + this.user)
           this.socket.emit('join', this.user); 
-        //   this.addedUser(this.user)
-        this.$store.dispatch('addUser', this.user)
+          this.$store.dispatch('addUser', this.user)
     },
-    // mounted () {
-    //     this.$store.dispatch('addUser', this.user)
-    // },
     computed: {
-        ...mapGetters({
-            users: 'getUsers'
-        }),
-        ...mapActions({
-            addedUser: 'addUser',
-            removedUser: 'removeUser'
-        })
+        users() {
+            console.log(this.$store.state.users)
+            return this.$store.state.users
+            
+        }
     },
     methods: {
         enterRoom(){
         this.socket.disconnect()
+        this.$store.dispatch('removeUser', this.user)
         this.$emit('child-room', 'Main Room')
             },
         sendMessage(e) {
@@ -138,17 +134,14 @@ export default {
         })
         }
     },
+
     mounted() {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
         });
-        // change to vuex
-        this.socket.on('userList', (all_users) => {
-            this.users = [...this.users, all_users];
-        });
-
         this.socket.on('user_joined', (data) => {
             this.joined = true
+            this.$store.dispatch('addUser', data.username)
             this.user_joined = `User ${data.username} has joined.`
             setTimeout(() =>{
                 this.joined = false
@@ -161,20 +154,19 @@ export default {
                 this.typing = false
             }, 5000);
         }),
-        this.s
         this.socket.on('userLeft', (data) => {
             this.left = true 
-            this.user_left = `${data.name} has left the chat`
+            this.user_left = `${data.username} has left the chat`
             setTimeout(() =>{
                 this.left = false
             }, 5000);
         })
+        
     },
     watch: {
         message() {
             this.userTyping()
-        },
-        
-    }
+        },   
+}
 }
 </script>

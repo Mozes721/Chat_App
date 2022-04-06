@@ -40,8 +40,10 @@ export default {
  data: () => ({
    username: '',
    selected: "Chat Room",
-  
  }),
+ created () {
+   console.log(console.log(this.$store.state.users))
+ },
   methods: {
     changeRoom () {
       this.selected = target.value
@@ -51,11 +53,15 @@ export default {
       if (this.username === ''){
         alert("You have to enter your name") 
       }
-      
-      else if (this.username.length < 6) {
+      if (this.username.length < 6) {
         alert("Your username is too short it has to be of lenght 6 or more")
       }
+      // if (this.$store.getters(this.username)) {
+      //   alert("User already in room choose different name")
+      // }
       else {
+      // mapActions('addUser',this.username)
+    
       this.$emit('child-room', this.selected)
       this.$emit('user-to-room', this.username)
       }
