@@ -41,13 +41,16 @@ export default {
    username: '',
    selected: "Chat Room",
  }),
- created () {
-   console.log(console.log(this.$store.state.users))
- },
+ computed: {
+        users() {
+            console.log(this.$store.state.users)
+            return this.$store.state.users
+            
+        }
+    },
   methods: {
     changeRoom () {
       this.selected = target.value
-      // alert(`Name: ${username} and ${selected}`)
     },
     enterRoom () {
       if (this.username === ''){

@@ -72,8 +72,6 @@
 <script>
 import EnterRoom from './EnterRoom.vue';
 import io from 'socket.io-client';
-// import axios from "axios";
-import { mapGetters, mapActions } from 'vuex'
 export default {
   name:'ChatRoom',
   components:{
@@ -110,7 +108,6 @@ export default {
     methods: {
         enterRoom(){
         this.socket.disconnect()
-        this.$store.dispatch('removeUser', this.user)
         this.$emit('child-room', 'Main Room')
             },
         sendMessage(e) {
@@ -134,7 +131,6 @@ export default {
         })
         }
     },
-
     mounted() {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
@@ -156,7 +152,8 @@ export default {
         }),
         this.socket.on('userLeft', (data) => {
             this.left = true 
-            this.user_left = `${data.username} has left the chat`
+            this.user_left = `A user has left has left the chat`
+            this.$store.dispatch('removeUser', data.user)
             setTimeout(() =>{
                 this.left = false
             }, 5000);

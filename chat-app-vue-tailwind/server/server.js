@@ -29,9 +29,6 @@ io.on('connection', function(socket) {
         const { error, user } = addUser(
             { id: socket.id, name: username });
         if (error) return callback(error);
-        // Change to vuex
-        io.emit("userList", user)
-    
         console.log(users)
         socket.broadcast.emit('user_joined', {
             username
@@ -50,8 +47,10 @@ io.on('connection', function(socket) {
         });
     })
    
-    socket.on('disconnect', () => {
-    socket.broadcast.emit("userLeft", getUser(socket.id))
+    socket.on('disconnect', function(data) {
+    socket.broadcast.emit("userLeft", {
+        ...data
+    })
     removeUser(socket.id);
   });
 })
