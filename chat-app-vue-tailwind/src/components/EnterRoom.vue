@@ -56,12 +56,10 @@ export default {
       if (this.username.length < 6) {
         alert("Your username is too short it has to be of lenght 6 or more")
       }
-      // if (this.$store.getters(this.username)) {
-      //   alert("User already in room choose different name")
-      // }
+      if (this.users.includes(this.username)) {
+        alert("User already in room choose different name")
+      }
       else {
-      // mapActions('addUser',this.username)
-    
       this.$emit('child-room', this.selected)
       this.$emit('user-to-room', this.username)
       }
