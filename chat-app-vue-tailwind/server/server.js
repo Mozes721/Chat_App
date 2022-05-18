@@ -3,7 +3,9 @@ const socket = require('socket.io')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
-const { addUser, removeUser, getUser} = require("./users");
+
+const { addUser, removeUser, getUser, users} = require("./users");
+
 const app = new express()
 
 
@@ -20,16 +22,13 @@ let io = socket(server, {
         origins: ["*"],
     }
 });
-
+ 
 
 io.on('connection', function(socket) {
     socket.on('join', (username) => {
         const { error, user } = addUser(
             { id: socket.id, name: username });
         if (error) return callback(error);
-        // if (user != users.leng)
-        io.emit("userList", user)
-        
         console.log(users)
         socket.broadcast.emit('user_joined', {
             username
@@ -48,10 +47,10 @@ io.on('connection', function(socket) {
         });
     })
    
-    socket.on('disconnect', () => {
-    // getUser(socket.id);     
-    socket.broadcast.emit("userLeft", getUser(socket.id))
+    socket.on('disconnect', function(data) {
+    socket.broadcast.emit("userLeft", {
+        ...data
+    })
     removeUser(socket.id);
-    
   });
 })

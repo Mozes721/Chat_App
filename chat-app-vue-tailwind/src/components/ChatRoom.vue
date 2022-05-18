@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
     <div class="flex flex-cols-2 w-3/4 border rounded items-center justify-center mb-8" style="min-height: 80vh;">
             <div class="w-1/4 h-full bg-gray-100  border-r border-gray-300">
-                <div class="my-3 mx-3 ">
+                <div class="my-3 mx-3 "> 
                     <button  class= " bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" v-on:click.prevent="enterRoom()">
                       Exit Room 
                     </button>  
@@ -11,11 +11,11 @@
                 <ul class="overflow-auto" style="height: 500px;">
                     <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Chats</h2>
                     <li>
-                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="user in users" :key="user">
+                        <a class="hover:bg-gray-100 border-b border-gray-300 px-3 py-2 cursor-pointer flex items-center text-sm focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" v-for="(user, idx) in users" :key="idx">
                              
                             <div class="w-full pb-2">
                                 <div class="flex justify-between">
-                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user.name}}</span>
+                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{user}}</span>
                                 </div>
                                
                             </div>
@@ -90,17 +90,21 @@ export default {
             user_typing: '',
             message: '',
             messages: [],
-            users: [],
             socket: io('localhost:3000')
         }
     },
     created: function () {
           this.$router.push("/chat-room/" + this.user)
-          this.socket.emit('join', this.user);  
-        //   this.all_users.allUsers;
-          console.log(this.all_users)
+          this.socket.emit('join', this.user); 
+          this.$store.dispatch('addUser', this.user)
     },
-   
+    computed: {
+        users() {
+            console.log(this.$store.state.users)
+            return this.$store.state.users
+            
+        }
+    },
     methods: {
         enterRoom(){
         this.socket.disconnect()
@@ -131,12 +135,9 @@ export default {
         this.socket.on('MESSAGE', (data) => {
             this.messages = [...this.messages, data];
         });
-        this.socket.on('userList', (all_users) => {
-            this.users = [...this.users, all_users];
-        });
-
         this.socket.on('user_joined', (data) => {
             this.joined = true
+            this.$store.dispatch('addUser', data.username)
             this.user_joined = `User ${data.username} has joined.`
             setTimeout(() =>{
                 this.joined = false
@@ -151,16 +152,18 @@ export default {
         }),
         this.socket.on('userLeft', (data) => {
             this.left = true 
-            this.user_left = `${data.name} has left the chat`
+            this.user_left = `A user has left has left the chat`
+            this.$store.dispatch('removeUser', data.user)
             setTimeout(() =>{
                 this.left = false
             }, 5000);
         })
+        
     },
     watch: {
         message() {
             this.userTyping()
-        },
-    }
+        },   
+}
 }
 </script>
