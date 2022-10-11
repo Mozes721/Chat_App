@@ -1,7 +1,7 @@
 <template>
   <div class="bg-blue-400 h-screen w-screen overflow-hidden">
     <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-    <div class="flex flex-cols-2 w-3/4 border rounded items-center justify-center mb-8" style="min-height: 80vh;">
+    <div class="flex flex-cols-2 w-3/4 border rounded items-center justify-center mb-8" style="min-height: 60vh;">
             <div class="w-1/4 h-full bg-gray-100  border-r border-gray-300">
                 <div class="my-3 mx-3 "> 
                     <button  class= " bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" v-on:click.prevent="enterRoom()">
@@ -31,7 +31,7 @@
                         <h5 class="block ml-2 font-bold text-base text-gray-600 float-left">{{this.user}}</h5>
                       
                     </div>
-                    <div id="chat" class="w-full overflow-y-auto p-10 relative" style="height: 700px;" ref="toolbarChat">
+                    <div id="chat" class="w-full overflow-y-auto p-10 relative" style="height: 600px;" ref="toolbarChat">
                         <ul>
                             <li class="clearfix2">
                                  <div v-for="(msg, index) in messages" :key="index">
@@ -120,6 +120,7 @@ export default {
             this.typing = false
             window.scrollTo(0, document.body.scrollHeight);
         },
+        
         User(User) {
             if (this.user === User) {
                 return true

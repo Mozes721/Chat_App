@@ -5,7 +5,7 @@ export default new Vuex.Store({
 	state: {
 	users: [],
 },
-plugins: [createPersistedState()],
+
 
 getters: {
 	allUsers: state => state.users
