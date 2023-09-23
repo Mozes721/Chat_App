@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build && yarn serve"
   },
   "dependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.2",
@@ -28,7 +28,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "vue-cli-plugin-tailwind": "~2.0.6"
   },
-  "description": "## Project setup ``` npm install ```",
+  "description": "## Project setup ``` npm install or yarn install ```",
   "main": "babel.config.js",
   "author": "Richard",
   "license": "ISC"
