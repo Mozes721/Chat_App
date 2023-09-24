@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
         <div class="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/3 bg-white sm:mx-0" style="height: 500px">
                 <div class="flex flex-col flex-1 justify-center mb-8">
-                    <h1 class="text-4xl text-center font-bold">Join your interest group and chat!</h1>
+                    <h1 class="text-4xl text-center font-bold">Join the chat!</h1>
                     <div class="w-full mt-4">
                         <form class="form-horizontal w-3/4 mx-auto" method="GET">
                             <div class="flex flex-col mt-4" required>
@@ -14,9 +14,6 @@
                               <span class= "px-1 text-gray-600 p-2">Choose your room</span>
                               <select  v-on:change="changeRoom($event)" class="form-select h-10 block w-full rounded">
                                 <option value="Chat Room">Chat Room</option>
-                                <!-- <option value="Stocks">Stocks</option>
-                                <option value="Real Estate">Real Estate</option>
-                                <option value="Mutual Funds and ETFs">Mutual Funds and ETFs</option> -->
                               </select>
                             </label>
                             <div class="flex flex-col mt-8">
@@ -34,12 +31,15 @@
 </template>
 
 <script>
+import io from 'socket.io-client';
+
 export default {
   name: 'EnterRoom',
   
  data: () => ({
    username: '',
    selected: "Chat Room",
+   socket: null,
  }),
  computed: {
         users() {
@@ -67,6 +67,12 @@ export default {
       this.$emit('user-to-room', this.username)
       }
     }
+  },
+  created() {
+    this.socket = io('localhost:3000');
+    this.socket.on('user_list_update', (userList) => {
+      this.$store.dispatch('updateUserList', userList);
+    });
   }
 }
 </script>

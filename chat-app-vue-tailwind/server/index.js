@@ -33,6 +33,9 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('user_joined', {
             username
         })
+        const names = users.map(user => user.name);
+
+        io.emit('user_list_update', names);
     });
 
     socket.on('SEND_MESSAGE', function(data) {
@@ -47,10 +50,15 @@ io.on('connection', function(socket) {
         });
     })
    
-    socket.on('disconnect', function(data) {
-    socket.broadcast.emit("userLeft", {
-        ...data
-    })
-    removeUser(socket.id);
-  });
+    socket.on('disconnect', function() {
+        const removedUser = removeUser(socket.id);
+        if (removedUser) {
+            socket.broadcast.emit("userLeft", {
+                username: removedUser.name
+            });
+            const names = users.map(user => user.name);
+
+            io.emit('user_list_update', names);
+        }
+    });
 })

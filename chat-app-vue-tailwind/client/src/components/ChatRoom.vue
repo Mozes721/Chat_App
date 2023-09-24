@@ -97,6 +97,7 @@ export default {
           this.$router.push("/chat-room/" + this.user)
           this.socket.emit('join', this.user); 
           this.$store.dispatch('addUser', this.user)
+          console.log('User added to store:', this.user);
     },
     computed: {
         users() {
