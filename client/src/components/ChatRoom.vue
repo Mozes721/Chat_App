@@ -90,7 +90,7 @@ export default {
             user_typing: '',
             message: '',
             messages: [],
-            socket: io('localhost:3000')
+            socket: io(process.env.SOCKET_SERVER_URL || 'localhost:3000')
         }
     },
     created: function () {
