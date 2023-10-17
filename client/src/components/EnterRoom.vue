@@ -39,7 +39,6 @@ export default {
  data: () => ({
    username: '',
    selected: "Chat Room",
-   socket: null,
  }),
  computed: {
         users() {
@@ -49,6 +48,10 @@ export default {
         }
     },
   methods: {
+    socket() {
+            const socketServerURL = process.env.SOCKET_SERVER_URL || 'http://localhost:3000';
+            this.socket = io(socketServerURL);
+      },
     changeRoom () {
       this.selected = target.value
     },
@@ -69,7 +72,7 @@ export default {
     }
   },
   created() {
-    this.socket = io('localhost:3000');
+    this.socket();
     this.socket.on('user_list_update', (userList) => {
       this.$store.dispatch('updateUserList', userList);
     });

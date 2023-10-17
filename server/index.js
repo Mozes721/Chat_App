@@ -12,6 +12,7 @@ const app = new express()
 app.use(bodyParser.json())
 app.use(cors())
 const port = process.env.SOCKET_SERVER_URL || 3000;
+const client_port =  process.env.VUE_CLIENT_URL || "*";
  
 
 var server = app.listen(port,() => {
@@ -20,7 +21,7 @@ var server = app.listen(port,() => {
 
 let io = socket(server, {
     cors: {
-        origins: ["*"],
+        origins: [client_port],
     }
 });
  
