@@ -90,14 +90,14 @@ export default {
             user_typing: '',
             message: '',
             messages: [],
-            socket: io('localhost:3000')
         }
     },
     created: function () {
-          this.$router.push("/chat-room/" + this.user)
-          this.socket.emit('join', this.user); 
-          this.$store.dispatch('addUser', this.user)
-          console.log('User added to store:', this.user);
+          this.$router.push("/chat-room/" + this.user);
+
+          this.socket();
+          
+          this.$store.dispatch('addUser', this.user);
     },
     computed: {
         users() {
@@ -107,6 +107,11 @@ export default {
         }
     },
     methods: {
+        socket() {
+            const socketServerURL = process.env.SOCKET_SERVER_URL || 'http://localhost:3000';
+            this.socket = io(socketServerURL);
+            this.socket.emit('join', this.user);
+        },
         enterRoom(){
         this.socket.disconnect()
         this.$emit('child-room', 'Main Room')

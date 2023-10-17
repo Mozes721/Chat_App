@@ -11,10 +11,11 @@ const app = new express()
 
 app.use(bodyParser.json())
 app.use(cors())
+const port = process.env.SOCKET_SERVER_URL || 3000;
  
 
-var server = app.listen(3000,() => {
-    console.log("Howdy, I am running at PORT 3000");
+var server = app.listen(port,() => {
+    console.log(`Howdy, I am running at PORT ${port}`);
 })
 
 let io = socket(server, {
