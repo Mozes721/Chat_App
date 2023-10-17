@@ -10,9 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20  
+          
+      - name: Use SOCKET_SERVER_URL secret
+        run: echo "SOCKET_SERVER_URL=$SOCKET_SERVER_URL" >> $GITHUB_ENV
+        
       - uses: akhileshns/heroku-deploy@v3.12.14 
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "chat-socket"
           heroku_email: "mozesthegreat@yahoo.com"
           subdir: "server"
+        env:
+          SOCKET_SERVER_URL: ${{secrets.SOCKET_SERVER_URL}}
