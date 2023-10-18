@@ -5,7 +5,7 @@ const cors = require('cors')
 const moment = require('moment')
 const { addUser, removeUser, getUser, users} = require("./users");
 
-
+require('dotenv').config()
 const app = new express()
 
 
