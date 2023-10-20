@@ -108,7 +108,7 @@ export default {
     },
     methods: {
         socket() {
-            const socketServerURL = process.env.VUE_PUBLIC_ENV_SOCKET || 'http://localhost:3000';
+            const socketServerURL = process.env.VUE_APP_SOCKET || 'http://localhost:3000';
             console.log('Socket Server URL:', socketServerURL);
             this.socket = io(socketServerURL);
             this.socket.emit('join', this.user);

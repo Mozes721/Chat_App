@@ -3,7 +3,7 @@ const socket = require('socket.io')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
-const { addUser, removeUser, getUser, users} = require("./users");
+const { addUser, removeUser, users} = require("./users");
 
 require('dotenv').config()
 const app = new express()
@@ -12,22 +12,24 @@ const app = new express()
 app.use(bodyParser.json())
 app.use(cors())
 
-const port = process.env.PUBLIC_ENV_SOCKET || 3000;
-const client_port =  process.env.VUE_CLIENT_URL || "*";
+const port = process.env.PORT || 3000;
+
  
 
 var server = app.listen(port,() => {
     console.log(`Howdy, I am running at PORT ${port}`);
 })
 
-app.get("/api", (req, res) => {
-    res.send(`Howdy, I am running at PORT ${port}`)
-})
 
 let io = socket(server, {
     cors: {
-        origins: [client_port],
+        origins: ["*"],
     }
+});
+
+app.get('/', (req, res) => {
+    res.write(`<h1>Socket IO Start on Port : ${PORT}</h1>`);
+    res.end();
 });
  
 

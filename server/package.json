@@ -1,14 +1,12 @@
 {
   "name": "socket-server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "build": "node index.js",
-    "postinstall": "ng build"
+    "build": "node index.js"
   },
   "buildpacks": [
     {
@@ -22,13 +20,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bufferutil": "^4.0.8",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.16.3",
+    "express": "^4.18.2",
     "moment": "^2.29.4",
-    "mongoose": "^5.1.7",
     "nodemon": "^3.0.1",
     "save": "^2.4.0",
     "socket.io": "^4.7.2"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
