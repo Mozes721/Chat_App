@@ -1,34 +1,39 @@
 const express  = require('express')
-const socket = require('socket.io')
+const app = new express()
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io')
+const io = new Server(server);
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const moment = require('moment')
 const { addUser, removeUser, users} = require("./users");
 
 require('dotenv').config()
-const app = new express()
 
 
 app.use(bodyParser.json())
-app.use(cors())
 
 const port = process.env.PORT || 3000;
-
+const client_port = process.env.VUE_CLIENT_URL || 8080;
  
 
-var server = app.listen(port,() => {
+server.listen(port,() => {
     console.log(`Howdy, I am running at PORT ${port}`);
 })
 
+const corsOptions = {
+    origin: client_port,
+    preflightContinue:false,
+    credentials: true
+  }
 
-let io = socket(server, {
-    cors: {
-        origins: ["*"],
-    }
-});
+
+  app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-    res.write(`<h1>Socket IO Start on Port : ${PORT}</h1>`);
+    res.write(`<h1>Socket IO Start on Port : ${port}</h1>
+                <h1>Listening Requests from Port : ${client_port}</h1>`);
     res.end();
 });
  
