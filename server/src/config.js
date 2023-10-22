@@ -1,19 +1,26 @@
-const cors = require('cors');
-const bodyParser = require('body-parser');
-
+const { Server } = require("socket.io");
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3000;
 const VUE_CLIENT_URL = process.env.VUE_CLIENT_URL || 8080
 
-function configureServer(app) {
-    const corsOptions = {
-        origin: VUE_CLIENT_URL,
-        preflightContinue: false,
-        credentials: true,
-      };
+const corsOptions = {
+    origin: [VUE_CLIENT_URL],
+    preflightContinue: false,
+    credentials: true,
+};
 
-    app.use(cors(corsOptions));
+function setupCORS(server) {
+    const io = new Server(server, {
+        cors: {
+          origin: [VUE_CLIENT_URL],
+          methods: ['GET', 'POST'],
+          preflightContinue:false,
+          credentials: false
+        },
+    });
+    return io
 }
 
-module.exports = { configureServer, PORT, VUE_CLIENT_URL, bodyParser };
+
+module.exports = {  setupCORS, PORT, VUE_CLIENT_URL };
