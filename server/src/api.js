@@ -3,6 +3,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const cors = require('cors')
 
 const { PORT, VUE_CLIENT_URL} = require('./config');
 const { setUpSocketIO  } = require('./socket');
@@ -11,7 +12,7 @@ app.use(cors())
 
 let io = new Server(server, {
     cors: {
-        origins: [VUE_CLIENT_URL],
+        origins: VUE_CLIENT_URL,
     }
 });
 
