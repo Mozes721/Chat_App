@@ -7,12 +7,10 @@ const socketio = require("socket.io");
 const { PORT, VUE_CLIENT_URL} = require('./config');
 const { setUpSocketIO  } = require('./socket');
 
-const cors = require('cors')
-app.use(cors())
 
 let io = socketio(server, {
     cors: {
-        origin: VUE_CLIENT_URL,
+        origin: "*",
         methods: ["GET", "POST"],
         credentials: true
       }
