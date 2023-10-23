@@ -2,18 +2,20 @@ const express  = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require("socket.io");
-const cors = require('cors')
+const socketio = require("socket.io");
 
 const { PORT, VUE_CLIENT_URL} = require('./config');
 const { setUpSocketIO  } = require('./socket');
 
+const cors = require('cors')
 app.use(cors())
 
-let io = new Server(server, {
+let io = socketio(server, {
     cors: {
-        origins: VUE_CLIENT_URL,
-    }
+        origin: VUE_CLIENT_URL,
+        methods: ["GET", "POST"],
+        credentials: true
+      }
 });
 
 app.get('/', (req, res) => {
