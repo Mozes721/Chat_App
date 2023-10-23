@@ -2,11 +2,18 @@ const express  = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
+const { Server } = require("socket.io");
 
-const {  setupCORS, PORT, VUE_CLIENT_URL} = require('./config');
+const { PORT, VUE_CLIENT_URL} = require('./config');
 const { setUpSocketIO  } = require('./socket');
 
-const io = setupCORS(server)
+app.use(cors())
+
+let io = new Server(server, {
+    cors: {
+        origins: [VUE_CLIENT_URL],
+    }
+});
 
 app.get('/', (req, res) => {
     res.write(`<h1>Socket IO Start on Port: ${PORT}</h1>
