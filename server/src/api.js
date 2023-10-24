@@ -1,34 +1,20 @@
-const express  = require('express');
+const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const socketio = require("socket.io");
+const io = require('socket.io')(server);
 
-const { PORT, VUE_CLIENT_URL} = require('./config');
-const { setUpSocketIO  } = require('./socket');
-
-
-let io = socketio(server, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
-        credentials: true
-      }
-});
+const { SERVER_PORT, VUE_CLIENT_URL } = require('./config');
+const { setUpSocketIO } = require('./socket');
 
 app.get('/', (req, res) => {
-    res.write(`<h1>Socket IO Start on Port: ${PORT}</h1>
+    res.write(`<h1>Socket IO Start on Port: ${SERVER_PORT}</h1>
               <h1>Listening Requests from Port: ${VUE_CLIENT_URL}</h1>`);
     res.end();
 });
 
-setUpSocketIO(io); 
+setUpSocketIO(io);
 
-server.listen(PORT, () => {
-    console.log(`listening on ${PORT}`);
+server.listen(SERVER_PORT, () => {
+    console.log(`listening on ${SERVER_PORT}`);
 });
-
-
-
-
-
