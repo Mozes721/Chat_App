@@ -49,7 +49,7 @@ export default {
     },
   methods: {
     socket() {
-            const socketServerURL = process.env.VUE_PUBLIC_ENV_SOCKET || 'http://localhost:3000';
+            const socketServerURL = process.env.VUE_APP_SOCKET || 'http://localhost:3000';
             this.socket = io(socketServerURL);
       },
     changeRoom () {
@@ -73,6 +73,12 @@ export default {
   },
   created() {
     this.socket();
+    const config = dotenv.config()
+    if(config.error){
+      console.log('could not load env file', config.error)
+    } else {
+      console.log(config.env.VUE_APP_SOCKET)
+    }
     this.socket.on('user_list_update', (userList) => {
       this.$store.dispatch('updateUserList', userList);
     });
